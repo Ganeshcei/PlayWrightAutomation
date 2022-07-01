@@ -17,7 +17,7 @@ export class LoginPage{
 
     loginPageObjects = new LoginPageObjects();
    
-
+//Web Actions
     async navigateToURL()
     {
         await webActions.navigateToURL(testConfig.dev);
