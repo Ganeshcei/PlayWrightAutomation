@@ -15,7 +15,7 @@ let loginPageObjects = new LoginPageObjects();
 
 beforeAll(async () =>{
      browser = await chromium.launch({
-        headless: false
+        headless: true
      })
      context = await browser.newContext();
      page = await context.newPage();  
@@ -24,20 +24,13 @@ beforeAll(async () =>{
 })
 test(`Login Function`, async () => {
    await Login.navigateToURL();
-   await Login.loginToApplication();
+   await Login.getAllElements();
+  
 });
 
 afterAll(async () =>{
-    context.close();
-    browser.close();
-}
-)
-}
 
-
-
-
-
-
-
-)
+    await context.close();
+    await browser.close();
+});
+})

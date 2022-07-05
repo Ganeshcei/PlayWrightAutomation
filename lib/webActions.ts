@@ -4,7 +4,6 @@ const waitForElement = testConfig.waitForElement;
 
 export class WebActions {
     private page: Page;
-
     constructor(page: Page) {
         this.page = page;
     }
@@ -75,10 +74,8 @@ export class WebActions {
     async verifyElementIsDisplayed(locator: string, errorMessage: string): Promise<void> {
         await this.page.waitForSelector(locator, { state: `visible`, timeout: waitForElement })
             .catch(() => { throw new Error(`${errorMessage}`); });
+      
     }
-    
-
-
 }
 
 
