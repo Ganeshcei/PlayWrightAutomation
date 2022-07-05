@@ -1,6 +1,6 @@
 import { LoginPageObjects } from "../objectRepo/LoginPageObjects";
 import { WebActions } from "../../lib/webActions";
-import type { Page } from "playwright";
+import { Page, selectors } from "playwright";
 import {testConfig } from '../../testConfig';
 
 let webActions: WebActions;
@@ -28,5 +28,42 @@ export class LoginPage{
         await webActions.enterElementText(this.loginPageObjects.PASSWORD_EDITBOX_ID, testConfig.password);
         await webActions.clickElement(this.loginPageObjects.SUBMIT_BUTTON_ID);
     }
+
+   
     
+    async getAllElements(): Promise<void> {
+
+        await this.page.waitForSelector("*", { timeout: 5000 })
+        const repos = await this.page.$$("*");
+       console.log(repos.length);
+     
+      const allUrls = await Promise.all(repos.map(async (repo, i) => {
+            return await repo.innerHTML();
+        }))
+        
+        console.log(allUrls);
+        console.log(allUrls.length);
+     
+        var ele: string[]=[];
+        let canCollect: boolean =false;
+        for(var elem of allUrls)
+        {
+         if(elem.startsWith("<"+"input"))
+         {
+             canCollect=true;
+         }
+         if(canCollect)
+         {
+             if (elem.startsWith("<" + "input") || elem.startsWith("</" + "input"))
+             ele.push(elem);
+         }
+         if (elem.startsWith("</" + "input")) {
+             canCollect = false ;
+         }
+        }
+        console.log(ele);
+        console.log(ele.length);
+
+    }
+
 }
